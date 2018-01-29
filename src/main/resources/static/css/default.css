@@ -1,0 +1,10 @@
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	width: auto;
+	padding: 10px 10px 10px 10px;
+	margin: 10px 10px 10px 10px;
+}

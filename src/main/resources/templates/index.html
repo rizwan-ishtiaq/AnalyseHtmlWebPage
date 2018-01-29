@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.6/css/bootstrap.min.css"
+	rel="stylesheet" media="screen" />
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.6/css/bootstrap.min.css"
+	rel="stylesheet" media="screen" />
+<link href="../../css/default.css" th:href="@{/css/default.css}"
+	rel="stylesheet" media="screen" />
+<script src="../../js/index.js" th:src="@{/js/index.js}"></script>
+</head>
+<body>
+	<h1>Analyse Web page</h1>
+	<form th:action="@{/}" action="#" method="post">
+		<input type="text" name="inputUrl" placeholder="enter url here" />
+		<button name="analyse" onclick="hideOthers();">Start Analyse</button>
+	</form>
+	<div th:unless="${message==null}" id="errorDiv"
+		class="alert fade in alert-dismissable alert-danger">
+		<strong th:text="${message}">Strong Alert Message</strong>
+	</div>
+	<div th:unless="${result == null}" id="resultDiv">
+		<h3>
+			Analyse Result -> <span th:text="${result.baseUrl}"></span>
+		</h3>
+		<table id="resultTbl" class="table table-striped table-bordered"
+			style="cellspacing: 0; width: 100%">
+			<tbody>
+				<tr>
+					<td><strong>HTML Version</strong></td>
+					<td th:text="${result.htmlVersion}">5</td>
+				</tr>
+				<tr>
+					<td><strong>Page Title</strong></td>
+					<td th:text="${result.pageTitle}">google</td>
+				</tr>
+				<tr>
+					<td><strong>Headings</strong></td>
+					<td th:text="${{result.headings}}">h1:5</td>
+				</tr>
+				<tr>
+					<td><strong>Internal Links</strong></td>
+					<td th:text="${result.internalLinksCount}">10</td>
+				</tr>
+				<tr>
+					<td><strong>External Links</strong></td>
+					<td th:text="${result.externalLinksCount}">20</td>
+				</tr>
+				<tr>
+					<td><strong>Have Login page</strong></td>
+					<td th:text="${result.loginForm}">true</td>
+				</tr>
+			</tbody>
+		</table>
+		<h3>Links Health Check</h3>
+		<table id="resultTbl" class="table table-striped table-bordered"
+			style="cellspacing: 0; width: 100%">
+			<thead>
+				<tr>
+					<th>Link</th>
+					<th>Status</th>
+					<th>Code</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="map : ${result.linksCheck}">
+					<td th:text="${map.key}"></td>
+					<td th:text="${T(com.util.HttpCode).get(map.value)}"></td>
+					<td th:text="${map.value}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
